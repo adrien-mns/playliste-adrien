@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Mini lecteur avec titres</title>
+
+<style>
+  body {
+    background-color: white;
+    color: black;
+    transition: all 0.4s;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 60px;
+  }
+
+  #themeButton {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  #player {
+    margin-top: 50px;
+  }
+
+  button {
+    margin: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<button id="themeButton" onclick="
+  if(document.body.style.backgroundColor=='white'){
+    document.body.style.backgroundColor='black';
+    document.body.style.color='white';
+  } else {
+    document.body.style.backgroundColor='white';
+    document.body.style.color='black';
+  }
+">
+Changer le thème
+</button>
+
+<h1>Playlist à Adrien</h1>
+
+<div id="player">
+  <audio id="audio" controls></audio>
+
+  <div>
+    <button onclick="prevSong()">⏮ Précédent</button>
+    <button onclick="nextSong()">⏭ Suivant</button>
+  </div>
+
+  <p id="songName">Titre de la musique</p>
+</div>
+
+<script>
+  // Playlist avec titres
+  const songs = [
+    {file: "BoysDontCry.mp3", title: "Boys Don't Cry"},
+    {file: "EyesWithoutAFace.mp3", title: "Eyes Without a Face"},
+    {file: "Over.mp3", title: "Over"},
+    {file: "ThisSideofParadise.mp3", title: "This Side of Paradise"},
+    {file: "Chandelier.mp3", title: "Chandelier"},
+    {file: "ChamberOfReflection.mp3", title: "Chamber Of Reflection"},
+    {file: "SLOWDANCINGINTHEDARK.mp3", title: "Slow Dancing In The Dark"},
+    {file: "MysteryGirl.mp3", title: "Mystery Girl"},
+    {file: "Creep.mp3", title: "Creep"},
+    {file: "Let It Happen.mp3", title: "Let It Happen"},
+    {file: "Feels.mp3", title: "Feels"},
+    {file: "Nope_your_too_late_i_already_died.mp3", title: "Nope you're too late I already died"},
+    {file: "Every Breath You Take.mp3", title: "Every Breath You Take"},
+    {file: "Everything In Its Right Place.mp3", title: "Everything In Its Right Place"},
+    {file: "For the First Time.mp3", title: "For the First Time"},
+    {file: "I Wanna Be Yours.mp3", title: "I Wanna Be Yours"}
+  ];
+
+  let current = 0;
+  const audio = document.getElementById("audio");
+  const songName = document.getElementById("songName");
+
+  function updateSong() {
+    audio.src = songs[current].file;
+    songName.textContent = songs[current].title;
+    audio.play();
+  }
+
+  function nextSong() {
+    current = (current + 1) % songs.length;
+    updateSong();
+  }
+
+  function prevSong() {
+    current = (current - 1 + songs.length) % songs.length;
+    updateSong();
+  }
+
+  // Lecture automatique de la musique suivante
+  audio.addEventListener("ended", nextSong);
+
+  // Charger la première musique
+  updateSong();
+</script>
+
+</body>
+</html>
